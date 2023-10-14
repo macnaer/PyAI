@@ -2,3 +2,4 @@
 /.vscode
 /lib/secret.py
 /lib/__pycache__
+/output.wav

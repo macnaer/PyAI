@@ -52,8 +52,8 @@ def get_transcription_result_url(url):
             return data, None
         elif data['status'] == "error":
             return data, None
-        print("Wait 30 sec.")
-        time.sleep(30)
+        print("Wait 10 sec.")
+        time.sleep(10)
 
 
 def save_transcript(url, title):
