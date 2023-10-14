@@ -2,8 +2,8 @@ import requests
 import time
 from lib.secret import API_KEY
 
-upload_endpoint = 'https://www.assemblyai.com/v2/upload'
-transcript_endpoint = 'https://www.assemblyai.com/v2/transcript'
+upload_endpoint = 'https://api.assemblyai.com/v2/upload'
+transcript_endpoint = 'https://api.assemblyai.com/v2/transcript'
 
 header_auth_only = {'authorization': API_KEY}
 
@@ -17,18 +17,15 @@ CHUNK_SIZE = 2_242_880
 
 def upload(filename):
     def read_file(filename):
-        print("read_file ====>>> ", upload_response)
-
-        with open(filename, 'rb') as fs:
+        with open(filename, 'rb') as f:
             while True:
-                data = fs.read(CHUNK_SIZE)
+                data = f.read(CHUNK_SIZE)
                 if not data:
                     break
                 yield data
 
     upload_response = requests.post(
         upload_endpoint, headers=header_auth_only, data=read_file(filename))
-    print("upload_response ====>>> ", upload_response)
     return upload_response.json()['upload_url']
 
 
@@ -59,12 +56,13 @@ def get_transcription_result_url(url):
         time.sleep(30)
 
 
-def save_transcription(url, title):
+def save_transcript(url, title):
     data, error = get_transcription_result_url(url)
+
     if data:
-        filename = title + ".text"
-        with open(filename, title, 'w') as fs:
-            fs.write(data['text'])
-        print("Transcript saved.")
+        filename = title + '.txt'
+        with open(filename, 'w') as f:
+            f.write(data['text'])
+        print('Transcript saved')
     elif error:
-        print("Something wend wrong.")
+        print("Error!!!", error)
