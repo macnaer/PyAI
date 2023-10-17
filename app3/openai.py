@@ -5,7 +5,7 @@ openai.api_key = API_KEY_OPENAI
 
 
 def ask(prompt):
-    return "May answer: "
+    return "AI answer: "
 
     res = openai.Completion.create(
         engine="text-davinchi-002",
